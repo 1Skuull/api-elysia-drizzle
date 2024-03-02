@@ -1,0 +1,20 @@
+GET http://localhost:9191/user/verify
+
+###
+
+POST http://localhost:9191/user
+Content-type: application/json
+# Authorization: token JH7593NF73YT93H
+
+{
+    "id": 1,
+    "name": "Ana Beatriz",
+    "email": "ana@gmail.com",
+    "password": "123456",
+    "createAt": "12/02/2024",
+    "updateAt": "12/02/2024"
+}
+
+###
+
+GET http://localhost:9191/user/1

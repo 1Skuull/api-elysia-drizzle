@@ -1,45 +1,37 @@
 import { Elysia } from "elysia";
-import { User } from "./user.schema";
-import { jwt } from "@elysiajs/jwt";
+import { UserSchema } from "./user.schema";
+import { createUser, getAllUser, getUserById } from "./user.repository";
 
 
-export const user = new Elysia({ prefix: "/user" })
-  .use(
-    jwt({
-      name: "jwt",
-      secret: process.env.SECRET_KEY as string,
-    })
-  )
-  .get("/:id", async ({ jwt, cookie: { auth  }, params }) => {
-    auth.set({
-      value: await jwt.sign({ auth: params.id }),
-      httpOnly: true,
-      maxAge: 7 * 86400,
-      // path: '/verify',
-    })
+export const user:any = new Elysia({ prefix: "/user" })
+  .get("/all", async () => {
+    try {
+      // const users = await getAllUser()
+      const users = await getUserById(1)
 
-    return auth.value
-  })
-  .get('/verify', async ({ jwt, set, cookie: { auth } }) => {
-    const profile = await jwt.verify(auth.value)
-    
-    console.log(profile)
-
-    if (!profile) {
-        set.status = 401
-        return 'Unauthorized'
+      return users
+    } catch (error) {
+      console.log(error)
+      return error
     }
-
-    return {id: profile.auth , msg: `Hello nundo`}
-})
-  .post("/",({ body }) => {
-
-      console.log("depois")
-
-      return body;
+  })
+  .post("/add", async ({ body }) => {
+      try {
+        const users = await createUser({
+          name: body.name,
+          email: body.email,
+          password: body.password
+        })
+        console.log("depois")
+        
+        return users
+      } catch (error) {
+        console.log(error)
+        return error;        
+      }
     },
     { 
       beforeHandle(){console.log("antes")} , 
-      body: User
+      body: UserSchema
     },
   )

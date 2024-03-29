@@ -6,7 +6,17 @@ To install dependencies:
 bun install
 ```
 
+Generate your MySql:
+
+```Generate drizzle
+bun run generate
+```
+
 To run:
+
+```Migrate drizzle
+bun run migrate
+```
 
 ```bash
 bun run dev

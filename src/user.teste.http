@@ -1,21 +1,27 @@
-POST http://localhost:9191/auth/login
+GET http://localhost:9191/user/4
 
 ###
+GET http://localhost:9191/user/all
 
+###
 POST http://localhost:9191/user/add
 Content-type: application/json
 
 {
     "name": "Ana Beatriz",
     "email": "ana@gmail.com",
-    "password": "123456",
+    "password": "123456"
 }
 
 ###
+PUT http://localhost:9191/user/4
+Content-type: application/json
 
-GET http://localhost:9191/user/all
-
+{
+    "name": "Alice Alves",
+    "email": "alice@gmail.com",
+    "password": "123456"
+}
 
 ###
-
-GET http://localhost:9191/auth/verify
+DELETE http://localhost:9191/user/4

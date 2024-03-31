@@ -1,6 +1,6 @@
-import { asc, desc, eq } from "drizzle-orm";
-import { db } from "./db/db";
-import { users, type User } from "./db/schema";
+import { and, asc, eq } from "drizzle-orm";
+import { db } from "../db/db";
+import { users, type User } from "../db/schema";
 
 export async function getAllUser():Promise<User[]>{
     const result:User[] = await db.select()
@@ -11,7 +11,18 @@ export async function getAllUser():Promise<User[]>{
 }
 
 export async function getUserById(id:number):Promise<User[]>{
-    const result:User[] = await db.select().from(users).where(eq(users.id, id))
+    const result:User[] = await db.select()
+    .from(users)
+    .where(eq(users.id, id))
+    
+    return result
+}
+
+export async function getUserByEmail(email:string):Promise<User[]>{
+    const result:User[] = await db.select()
+    .from(users)
+    .where(eq(users.email, email))
+    
     return result
 }
 

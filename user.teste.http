@@ -1,4 +1,4 @@
-GET http://localhost:9191/user/4
+GET http://localhost:9191/user/2
 
 ###
 GET http://localhost:9191/user/all
@@ -25,3 +25,9 @@ Content-type: application/json
 
 ###
 DELETE http://localhost:9191/user/4
+
+###
+POST http://localhost:9191/auth/login
+
+###
+GET http://localhost:9191/auth/verify

@@ -1,6 +1,6 @@
 import { Elysia, t } from "elysia";
-import { UserSchema } from "./user.schema";
-import { createUser, getAllUser, getUserById, deletedUser, updateUser } from "./user.repository";
+import { UserSchema } from "../schemas/user.schema";
+import { createUser, getAllUser, getUserById, deletedUser, updateUser, getUserByEmail } from "../repositories/user.repository";
 
 
 export const user = new Elysia({ prefix: "/user" })
@@ -10,7 +10,7 @@ export const user = new Elysia({ prefix: "/user" })
 
       if (!users.length) {
         set.status = 400
-        return 'No users found!'
+        return 'No users found😡!'
       }
 
       return users
@@ -30,7 +30,7 @@ export const user = new Elysia({ prefix: "/user" })
 
       if (!users.length) {
         set.status = 400
-        return 'No users found!'
+        return 'No users found😡!'
       }
 
       return users
@@ -39,8 +39,17 @@ export const user = new Elysia({ prefix: "/user" })
       return error
     }
   })
-  .post("/add", async ({ body }) => {
+  .post("/add", async ({ set, body }) => {
     try {
+      const emailExist = await getUserByEmail(body.email)
+
+      console.log(emailExist)
+
+      if (emailExist.length) {
+        set.status = 400
+        return 'User exist😡!'
+      }
+
       await createUser({
         name: body.name,
         email: body.email,
@@ -48,7 +57,7 @@ export const user = new Elysia({ prefix: "/user" })
       })
       console.log("depois")
         
-      return "vapo!"
+      return "vapo🖕"
     } catch (error) {
       console.log(error)
       return error;        
@@ -67,7 +76,7 @@ export const user = new Elysia({ prefix: "/user" })
 
       if (!userExist.length) {
         set.status = 400
-        return 'User does not exist!'
+        return 'User does not exist😡!'
       }
       
       await updateUser({
@@ -76,7 +85,7 @@ export const user = new Elysia({ prefix: "/user" })
         password: await Bun.password.hash(body.password)
       }, params.id)
       
-      return "Updated user!";
+      return "Updated user🐤!";
     } catch (error) {
       console.log(error)
       return error;  
@@ -96,12 +105,12 @@ export const user = new Elysia({ prefix: "/user" })
 
       if (!userExist.length) {
         set.status = 400
-        return 'User does not exist!'
+        return 'User does not exist😡!'
       }
 
       await deletedUser(params.id)
       
-      return "Deleted user!"
+      return "Deleted user🐇!"
     } catch (error) {
       console.log(error)
       return error;

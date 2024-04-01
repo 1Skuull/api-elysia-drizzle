@@ -1,5 +1,5 @@
 CREATE TABLE `bio` (
-	`title` text,
+	`text` text,
 	`user_id` int,
 	`created_at` timestamp DEFAULT (now()),
 	`updated_at` timestamp DEFAULT (now())
@@ -7,7 +7,8 @@ CREATE TABLE `bio` (
 --> statement-breakpoint
 CREATE TABLE `comments` (
 	`id` int NOT NULL,
-	`text` text,
+	`title` text,
+	`text` text NOT NULL,
 	`user_id` int,
 	`post_id` int,
 	`created_at` timestamp DEFAULT (now()),
@@ -25,13 +26,20 @@ CREATE TABLE `likes` (
 --> statement-breakpoint
 CREATE TABLE `posts` (
 	`id` int AUTO_INCREMENT NOT NULL,
-	`tittle` text,
-	`title` text,
+	`text` text NOT NULL,
 	`user_id` int,
 	`created_at` timestamp DEFAULT (now()),
 	`updated_at` timestamp DEFAULT (now()),
 	CONSTRAINT `posts_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
-ALTER TABLE `users` MODIFY COLUMN `name` text;--> statement-breakpoint
-ALTER TABLE `users` MODIFY COLUMN `email` text;
+CREATE TABLE `users` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`name` text NOT NULL,
+	`email` text NOT NULL,
+	`password` text NOT NULL,
+	`created_at` timestamp DEFAULT (now()),
+	`updated_at` timestamp DEFAULT (now()),
+	CONSTRAINT `users_id` PRIMARY KEY(`id`),
+	CONSTRAINT `users_email_unique` UNIQUE(`email`)
+);

@@ -26,8 +26,8 @@ Content-type: application/json
 ###
 DELETE http://localhost:9191/user/4
 
-###
-POST http://localhost:9191/auth/login
+###Postagens
+POST http://localhost:9191/post/add
 
 ###
-GET http://localhost:9191/auth/verify
+GET http://localhost:9191/post/all

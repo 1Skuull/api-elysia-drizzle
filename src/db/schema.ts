@@ -16,24 +16,23 @@ export const usersRelations = relations(users, ({ many }) => ({
   likes: many(likes),
 }));
 
-export const bio = mysqlTable('bio', {
-  text: text('title'), 
+export const profiles = mysqlTable('profiles', {
+  bio: text('bio'), 
   userId: int('user_id'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow()
 })
 
-export const bioRelations = relations(bio, ({ one }) => ({
+export const bioRelations = relations(profiles, ({ one }) => ({
   user: one(users, {
-    fields: [bio.userId],
+    fields: [profiles.userId],
     references: [users.id],
   }),
 }));
 
 export const posts = mysqlTable('posts', {
   id: int("id").autoincrement().primaryKey(),
-  title: text('title'),
-  text: text('title').notNull(), 
+  text: text('text').notNull(), 
   userId: int('user_id'),
   createdAt: timestamp('created_at').defaultNow(),
   updatedAt: timestamp('updated_at').defaultNow()
@@ -50,6 +49,7 @@ export const postsRelations = relations(posts, ({ one, many }) => ({
 
 export const comments = mysqlTable('comments', {
   id: int('id').primaryKey(),
+  title: text('title'),
   text: text('text').notNull(),
   userId: int('user_id'),
   postId: int('post_id'),

@@ -1,48 +1,9 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "8a6fe47a-378c-460b-96c4-563174498c1c",
-  "prevId": "66eb253f-a3e2-41a6-9c07-d5d915ee17ae",
+  "id": "1fd895bb-b2dd-4c03-b73a-4b7f2f20eba3",
+  "prevId": "a7883b51-15c8-43a9-b3a3-40ab0758f918",
   "tables": {
-    "bio": {
-      "name": "bio",
-      "columns": {
-        "title": {
-          "name": "title",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "int",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "(now())"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "(now())"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
     "comments": {
       "name": "comments",
       "columns": {
@@ -53,11 +14,18 @@
           "notNull": true,
           "autoincrement": false
         },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "text": {
           "name": "text",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "user_id": {
@@ -157,18 +125,11 @@
           "notNull": true,
           "autoincrement": true
         },
-        "tittle": {
-          "name": "tittle",
+        "text": {
+          "name": "text",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "title": {
-          "name": "title",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "user_id": {
@@ -207,6 +168,45 @@
       },
       "uniqueConstraints": {}
     },
+    "profiles": {
+      "name": "profiles",
+      "columns": {
+        "bio": {
+          "name": "bio",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "users": {
       "name": "users",
       "columns": {
@@ -221,21 +221,21 @@
           "name": "name",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "email": {
           "name": "email",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "password": {
           "name": "password",
           "type": "text",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "created_at": {
@@ -265,13 +265,24 @@
           ]
         }
       },
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "users_email_unique": {
+          "name": "users_email_unique",
+          "columns": [
+            "email"
+          ]
+        }
+      }
     }
   },
   "schemas": {},
   "_meta": {
     "schemas": {},
-    "tables": {},
-    "columns": {}
+    "tables": {
+      "\"bio\"": "\"profiles\""
+    },
+    "columns": {
+      "\"profiles\".\"text\"": "\"profiles\".\"bio\""
+    }
   }
 }
